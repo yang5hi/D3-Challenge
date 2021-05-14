@@ -19,8 +19,17 @@ d3.csv("assets/data/data.csv").then(function(censusData){
     console.log (obesePct);
     const incomeMedian=censusData.map(data => data.income);
     console.log (incomeMedian);
+    scatterPlot(inPoverty,healthcareLacks);
 });
-
-function scatterPlot () {
-    Plotly.newPlot
+// function to update scatter plot
+function scatterPlot (x,y) {
+    const data =[{
+        x:x,
+        y:y,
+        mode:'markers',
+        marker: {
+            size: Array.from({length: 50}, (_, i) => (1**i*10))
+        }
+    }];
+    Plotly.newPlot('scatter',data);
 };
