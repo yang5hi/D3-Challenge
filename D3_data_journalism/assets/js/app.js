@@ -94,13 +94,13 @@ d3.csv("assets/data/data.csv").then(function(census){
         .attr("y", (d=>yLinearScale(+d.healthcare)+5))  // Location of y
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
-        .attr("fill","#fff");
+        .attr("fill","gray");
 
     // Step 1: Initialize Tooltip
     var toolTip = d3.tip()
     .attr("class", "tooltip")
     .offset([0, 60])
-    .html(d=>`${d.state}`);
+    .html(d=>`${d.state} <br>x_lable ${d.poverty} x_unit <br>y_label ${d.healthcare} y_unit`);
 
   // Step 2: Create the tooltip in chartGroup.
   chartGroup.call(toolTip);
@@ -113,8 +113,6 @@ d3.csv("assets/data/data.csv").then(function(census){
     .on("mouseout", function(d) {
       toolTip.hide(d);
     });
-
-
 
     }).catch(function(error) {
 console.log(error);
