@@ -76,13 +76,11 @@ d3.csv("assets/data/data.csv").then(function(census){
         .data(census)
         .enter()
         .append("circle")
-        .attr("r", 12)  // Radius
+        .attr("r", 15)  // Radius
         .attr("cx", (d=>xLinearScale(+d.poverty)))  // Returns scaled circle x
         .attr("cy", (d=>yLinearScale(+d.healthcare)))  // Returns scaled circle y
-        .style("stroke", "gray")
-        .attr("fill","steelblue")
-        .attr("opacity", "0.5")
-        .attr("stroke-width", "2");
+        .attr("class", "stateCircle");
+
 
     // Add Text Labels
     chartGroup.selectAll("text")
@@ -90,29 +88,29 @@ d3.csv("assets/data/data.csv").then(function(census){
         .enter()
         .append("text")
         .text(d=>d.abbr) // display the state abbr
-        .attr("x", (d=>xLinearScale(+d.poverty)-7))  // Location of x
+        .attr("x", (d=>xLinearScale(+d.poverty)))  // Location of x
         .attr("y", (d=>yLinearScale(+d.healthcare)+5))  // Location of y
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 10)
-        .attr("fill","gray");
+        .attr("class","stateText");
 
-    // Step 1: Initialize Tooltip
+    // Add color titles to the x-axis
+    chartGroup.append("text")
+    // Position the text Center the text:
+      .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + margin.top + 20})`)
+      .classed("aText",true)
+      .text("x_label");
+
+    //============start tooltip==========================
+    // Initialize Tooltip
     var toolTip = d3.tip()
-    .attr("class", "tooltip")
-    .offset([0, 60])
-    .html(d=>`${d.state} <br>x_lable ${d.poverty} x_unit <br>y_label ${d.healthcare} y_unit`);
-
-  // Step 2: Create the tooltip in chartGroup.
-  chartGroup.call(toolTip);
-
-  // Step 3: Create "mouseover" event listener to display tooltip
-  circlesGroup.on("mouseover", function(d) {
-    toolTip.show(d, this);
-  })
-  // Step 4: Create "mouseout" event listener to hide tooltip
-    .on("mouseout", function(d) {
-      toolTip.hide(d);
-    });
+        .attr("class", "d3-tip")
+        .offset([0, 60])
+        .html(d=>`${d.state} <br>x_lable ${d.poverty} x_unit <br>y_label ${d.healthcare} y_unit`);
+    // Create the tooltip in chartGroup.
+    chartGroup.call(toolTip);
+    // Create "mouseover" event listener to display tooltip
+    circlesGroup.on("mouseover", function(d) {toolTip.show(d, this);})
+    // Create "mouseout" event listener to hide tooltip
+        .on("mouseout", function(d) {toolTip.hide(d);});
 
     }).catch(function(error) {
 console.log(error);
