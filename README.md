@@ -1,5 +1,6 @@
 # Data Journalism and D3
 
+### Background
 This project is to analyze the current trends shaping people's lives and report it as a data journalism. I used JavaScript to create charts, graphs, and interactive elements to help readers understand the health risks facing particular demographics. I sifted through information from the U.S. Census Bureau and the Behavioral Risk Factor Surveillance System. The data set I used here is based on 2014 ACS 1-year estimates from the [US Census Bureau](https://data.census.gov/cedsci/). The current data set includes data on rates of income, obesity, poverty, etc., by state. MOE stands for "margin of error."
 
 ### D3 Scatter plot with multiple axises and tooltip
