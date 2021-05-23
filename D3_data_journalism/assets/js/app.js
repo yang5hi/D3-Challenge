@@ -110,10 +110,26 @@ function updateToolTip(chosenXAxis,chosenYAxis, stateTextGroup) {
   
     // Create the tooltip in chartGroup.
     stateTextGroup.call(toolTip);
-    // Create "mouseover" event listener to display tooltip
-    stateTextGroup.on("mouseover", function(d) {toolTip.show(d, this);})
-    // Create "mouseout" event listener to hide tooltip
-        .on("mouseout", function(d) {toolTip.hide(d);});
+    // Create "mouseover" event listener to display tooltip and add gray border to the circle
+    stateTextGroup.on("mouseover", function(d) {
+        toolTip.show(d, this);
+        chartGroup.selectAll('.tempCircle')
+            .data("1")
+            .enter()
+            .append("circle")
+            .attr("cx", d3.select(this).attr("x"))  // Returns scaled circle x
+            .attr("cy", d3.select(this).attr("y")-5)  // Returns scaled circle y
+            .attr("r", 10)  // Radius
+            .style("stroke", "gray")
+            .style("stroke-width", 2)
+            .style("fill","none")
+            .classed("tempCircle",true);
+    })
+    // Create "mouseout" event listener to hide tooltip, and the gray border
+        .on("mouseout", function(d) {
+            toolTip.hide(d);
+            d3.selectAll('.tempCircle').remove();
+        });
     return stateTextGroup;
 }
 
