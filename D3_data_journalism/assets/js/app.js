@@ -1,6 +1,6 @@
 // Define SVG area dimensions
-var svgWidth = 960;
-var svgHeight = 660;
+var svgWidth = 800;
+var svgHeight = 800;
 
 // Define the chart's margins as an object
 var margin = {
@@ -87,26 +87,32 @@ function renderAbbrs(stateTextGroup, newXScale, newYScale,chosenXAxis, chosenYAx
 function updateToolTip(chosenXAxis,chosenYAxis, stateTextGroup) {
     var xLabel;
     if (chosenXAxis == "poverty") {
-      xLabel = "In Povery (%)";
+      xLabel = "In Povery";
+      xUnit = "%";
     } else if(chosenXAxis == "age") {
-      xLabel = "Age (Median)";
+      xLabel = "Median Age";
+      xUnit = "";
     } else {
-      xLabel = "Household Income (Median)";  
+      xLabel = "Median Household Income";
+      xUnit = "";  
     }
 
     var yLabel;
     if (chosenYAxis == "obesity") {
-      yLabel = "Obesity (%)";
+      yLabel = "Obesity";
+      yUnit ="%";
     } else if(chosenYAxis == "smokes") {
-      yLabel = "Smokes (%)";
+      yLabel = "Smokes";
+      yUnit ="%";
     } else if(chosenYAxis == "healthcare") {
-      yLabel = "Lacks Healthcare (%)";  
+      yLabel = "Lacks Healthcare"; 
+      yUnit ="%"; 
     }
     // Initialize Tooltip
     var toolTip = d3.tip()
       .attr("class", "d3-tip")
       .offset([40, -80])
-      .html(d => `${d.state} <br>------------<br> ${xLabel}: ${d[chosenXAxis]}<br> ${yLabel}: ${d[chosenYAxis]}`);
+      .html(d => `<strong>${d.state}</strong><br>${xLabel}: ${d[chosenXAxis]}${xUnit}<br>${yLabel}: ${d[chosenYAxis]}${yUnit}`);
   
     // Create the tooltip in chartGroup.
     stateTextGroup.call(toolTip);
@@ -215,7 +221,7 @@ d3.csv("assets/data/data.csv").then(function(censusData){
         .attr("value", "obesity") // value to grab for event listener
         .classed("active", true)
         .attr("dy", "1em")
-        .text("obesity (%)");
+        .text("Obesity (%)");
     var smokesLabel = yLabelsGroup.append("text")
         .attr("y", 20 - margin.left)
         .attr("x", 0 - (chartHeight / 2))
